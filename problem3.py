@@ -1,12 +1,13 @@
 # https://projecteuler.net/problem=3
 
-import math
 
+import math
+from collections import defaultdict
 
 def get_factors(n):
     i = 3
     primes = [2]
-    factors = []
+    factors = defaultdict(int)
 
     while True:
         is_prime = True
@@ -19,16 +20,14 @@ def get_factors(n):
         if is_prime:
             primes.append(i)
 
-        if n % i == 0:
-            factors.append([i, 0])
         while n % i == 0:
+            factors[i] += 1
             n /= i
-            factors[-1][1] += 1
 
         if i > int(math.sqrt(n)):
             if n != 1:
                 primes.append(int(n))
-                factors.append([int(n), 1])
+                factors[int(n)] = 1
             break
         i += 1
 
@@ -39,7 +38,7 @@ def main():
     N = int(input())
     factors = get_factors(N)
 
-    print(factors[-1][0])
+    print(max(list(factors.keys())))
 
 
 if __name__ == '__main__':
