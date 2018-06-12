@@ -4,10 +4,17 @@
 import math
 from collections import defaultdict
 
+
+def devide(n, i, factors):
+    while n % i == 0:
+        factors[i] += 1
+        n /= i
+    return n
+
+
 def get_factors(n):
-    i = 3
-    primes = [2]
-    factors = defaultdict(int)
+    i, primes, factors = 3, [2], defaultdict(int)
+    n = devide(n, 2, factors)
 
     while True:
         is_prime = True
@@ -20,26 +27,21 @@ def get_factors(n):
         if is_prime:
             primes.append(i)
 
-        while n % i == 0:
-            factors[i] += 1
-            n /= i
+        n = devide(n, i, factors)
 
         if i > int(math.sqrt(n)):
             if n != 1:
                 primes.append(int(n))
                 factors[int(n)] = 1
             break
-        i += 1
+        i += 2
 
     return factors
 
 
-def main():
+if __name__ == '__main__':
     N = int(input())
     factors = get_factors(N)
 
     print(max(list(factors.keys())))
 
-
-if __name__ == '__main__':
-    main()
