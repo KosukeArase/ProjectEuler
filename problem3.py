@@ -19,21 +19,22 @@ def get_factors(n):
     while True:
         is_prime = True
         for p in primes:
-            if p > int(math.sqrt(i)): # nothing in p can devide i
+            if p > int(math.sqrt(i)): # any p cannot devide i
                 break
             elif i % p == 0:
                 is_prime = False
                 break
+
         if is_prime:
             primes.append(i)
-
-        n = devide(n, i, factors)
+            n = devide(n, i, factors)
 
         if i > int(math.sqrt(n)):
-            if n != 1:
+            if n != 1: #prime
                 primes.append(int(n))
                 factors[int(n)] = 1
             break
+
         i += 2
 
     return factors
